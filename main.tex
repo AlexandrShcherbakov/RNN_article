@@ -1,0 +1,131 @@
+\documentclass[14pt]{article}
+\usepackage[T2A]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage{alltt}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{wrapfig}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\usepackage[pdftex]{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{textcomp}
+\usepackage{array}
+\usepackage[T1]{fontenc}
+\usepackage{librebaskerville}
+
+\topmargin = -1.5cm
+\marginparwidth = -1cm
+\marginparsep = 0pt
+\textwidth = 16cm
+\textheight = 24cm
+\oddsidemargin = 0.2cm
+\parindent = 0.5cm
+\lineskip = 0.025cm
+\parskip = 0.2cm
+
+
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
+\centering 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{1.5cm}
+        \includegraphics[height=1.3cm]{msu.jpg}
+    \end{subfigure}
+    \parbox[t][0.2cm][c]{12cm}{
+        \centering
+        \large Московский государственный университет имени М.~В.~Ломоносова\\[0.5cm]
+        \normalsize Факультет вычислительной математики и кибернетики
+    }
+    \begin{subfigure}{1.25cm}    
+        \includegraphics[height=1.25cm]{cmc.jpg}
+    \end{subfigure}
+\end{figure}
+
+
+
+\HRule \\[5cm]
+{
+ \bfseries \upshape
+{ \Huge  \guillemotleftРекурсивные нейросети с памятью\guillemotright }\\[0.2cm]
+{\LARGE Реферат}\\[0.2cm]
+
+{
+\large
+\vspace{1cm}
+студента $203$ учебной группы факультета ВМК МГУ \\
+Щербакова Александра Станиславовича
+}
+
+\vspace{9cm}
+{\large Москва, \today}
+} 
+
+
+\vfill
+
+\end{titlepage}
+
+\tableofcontents
+\pagebreak
+\section{Введение}
+
+\large
+Рекурсивные нейронные сети (Recursive Neural Networks, RNN) известны уже около 20-ти лет. Это вид глубоких нейронных сетей, которые работают с некоторым набором весов рекурсивно. Рекурсивные нейросети используются для обработки естественных языков, работы с последовательностями, изображениями.
+
+
+\section{Рекурсивные нейросети}
+
+\subsection{Описание}
+\largeРекурсивные нейронные сети подходят для задачи классификации и регрессии. Они широко используются в моделях с информацией в числовом и символьном виде. Важным преимуществом рекурсивных нейросетей является их возможность работать с информацией имеющей топологию отличную от вектора фиксированного размера. Таким образом для информации, представленной в виде графа, сохраняются связи между вершинами графа. Но есть существенное ограничение на топологию графов, с которыми ведет работу нейронная сеть этого типа - они должны быть ацикличны. Это связано с тем, что ребра графа интерпретируются как причинно-следственная связь. Есть примеры рекурсивных нейронных сетей, которые обрабатывают циклические графы, но они, как правило, могут быть использованы только в очень редких конкретных видах задач.
+
+
+Второе ограничение связано с достаточно слабым математическим аппаратом такой сети. В частности, отсутствие такой операции как сумма графов.
+
+
+В качестве алгоритма для обучения рекурсивной нейронной сети можно использовать алгоритм стохастического градиентного спуска второго порядка. Этот метод устойчив к затуханию градиента. Так же он обеспечивает оптимальный компромисс между скоростью сходимости и вычислительносй сложностью вычислений.
+
+
+\subsection{Структура}
+\largeРекурсивную сеть можно представить в виде графа $(V, E)$.
+
+\subsection{Обучение}
+
+
+\section{\hugeРекурентные нейросети}
+
+\subsection{\LARGEОписание}
+
+\subsection{\LARGEСтруктура}
+
+\subsection{\LARGEОбучение}
+
+
+\section{\huge LSTM}
+
+\subsection{\LARGEОписание}
+
+\subsection{\LARGEСтруктура}
+
+\subsection{\LARGEОбучение}
+
+
+\section{\hugeПримеры использования рекурсивных сетей}
+
+\subsection{\LARGEОбработка естественных языков}
+
+\subsection{\LARGEОбработка изображений}
+
+
+\section{\hugeЗаключение}
+
+\end{document}
