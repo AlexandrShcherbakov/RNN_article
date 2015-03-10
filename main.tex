@@ -29,6 +29,7 @@
 
 
 
+
 \begin{document}
 
 \begin{titlepage}
@@ -132,11 +133,56 @@ a(ch[v]) = [a(ch_1[v]), a(ch_2[v]), \dots, a(ch_o[v])]
 \end{figure}
 
 
-
-
 \subsection{Обучение}
+Алгоритмы обучения нейронных сетей строятся на минимизации некоторой функции $E(W)$ - функции ошибки. Соответственно, изменяется ее параметр $W$.
 
 
+В случае рекурсивных нейронных сетей фаза обучения состоит из подбора параметров функции изменения состояния $f$ и выходной функции $g$. Обозначим вектор параметров этих функций через $W = [w_1, w_2, \dots, w_m]$. Тогда возмущение функции ошибки относительно некоторой точки можно записать в виде\\ $E(W + \Delta W) = E(w_1 + \Delta w_1, w_2 + \Delta w_2, \dots, w_m + \Delta w_m)$. Воспользуемся разложением в ряд Тейлора этой функции:
+
+
+\begin{multline}
+\label{trivial}
+E(W + \Delta W) = E(W) + \sum\limits_{i = 1}^m\frac{\partial E(W)}{\partial w_i}\Delta w_i +
+\frac{1}{2}\sum\limits_{i = 1}^m\frac{\partial^2 E(W)}{\partial w_i^2}(\Delta w_i)^2 +\\
++\sum\limits_{i < j}\frac{\partial^2 E(W)}{\partial w_i \partial w_j}\Delta w_i \Delta w_j+
+\frac{1}{6}\sum\limits_{i = 1}^m\frac{\partial^3 E(W)}{\partial w_i^3}(\Delta w_i)^3 + \dots
+\end{multline}
+
+
+Итак, каждое обновление параметров модели (весов) можно рассматривать как возмущение относительно некоторой точки, заданное $m$-мерным вектором. Пусть задана послудевательность из $N$ таких векторов с возмущением $\Delta W^i, i = \overline{1, N}$. В формуле $(3)$ отбросим все члены третьего и более высоких порядков и выразим математическое ожидание функции ошибки:
+
+
+\begin{multline}
+\label{trivial}
+\mathbb{E}(E(W)) = \frac{1}{N}\sum\limits_{n = 1}^N E(W + \Delta W^n)\\
+\mathbb{E}(E(W)) = E(W) + \sum\limits_{i = 1}^m\frac{\partial E(W)}{\partial w_i}\frac{1}{N}\sum\limits_{n=1}^N\Delta w_i^n+ \frac{1}{2}\sum\limits_{i=1}^m\frac{\partial^2E(W)}{\partial w_i^2}\frac{1}{N}\sum\limits_{n=1}^N(\Delta w_i^n)^2 
++\\+\sum\limits_{i<j}\frac{\partial^2E(W)}{\partial w_i\partial w_j}\frac{1}{N}\sum\limits_{n=1}{N}\Delta w_i^n\Delta w_j^n
+\end{multline}
+
+
+Перепишем равенство $(4)$ в терминах моментов случайных величин:
+
+
+\begin{multline}
+\mathbb{E}(E(W)) \cong E(W) + \sum\limits_{i=1}^m\mathbb{E}(\Delta w_i)\frac{\partial E(W)}{\partial w_i} +
+\frac{1}{2}\sum\limits_{i=1}^{m}\mathbb{D}(\Delta w_i)\frac{\partial^2E(W)}{\partial w_i^2} +\\
++ \sum\limits_{i<j}cov(\Delta w_i, \Delta w_j)\frac{\partial^2E(W)}{\partial w_i \partial w_j}
+\end{multline}
+
+
+Так как обучение проводится методом градиентного спуска, то $\Delta w_i = -\eta g_i$.  Слагаемым, содержащим $cov(\Delta w_i, \Delta w_j)$, можно принебречь в предположении, что возмущенния не коррелируют в зависимости от $n$. $\mathbb{E}(\Delta w_i)\approx 0$, поэтому можно отбросить первую сумму в $(5)$. $\mathbb{D}(\Delta w_i)$ перепишем в виде $\sigma^2(\Delta w_i)$. В итоге получим:
+
+
+\begin{equation}
+\mathbb{E}(E(W)) \cong E(W) +
+\frac{1}{2}\sum\limits_{i=1}^{m}\sigma^2(\Delta w_i)\frac{\partial^2E(W)}{\partial w_i^2} = E(W) + \frac{\eta^2}{2}\sum\limits_{i=1}^{m}\sigma^2(g_i)\frac{\partial^2E(W)}{\partial w_i^2}
+\end{equation}
+
+
+Видно, что значение ошибки достаточно сильно зависит от $\Delta w_i$. Поэтому, чтобы подавить возможный шум $\Delta w_i$ может быть заменено на $\eta g_i / \sigma(g_i)$. Заметим, что таким образом сигнал ошибки становится меньше, но в то же время меньше становится и объем информации, которую накапливает сеть. Это известная проблема, которая затрудняет поддержку долговременных связей. В случае рекурсивных нейросетей это становится особенно критично. Но с другой стороны, это позволяет избежать затухание градиента.
+
+
+Таким образом обучение рекурсивной нейронной сети производится градиентным спуском второго порядка.
 \section{\hugeРекурентные нейросети}
 
 \subsection{\LARGEОписание}
